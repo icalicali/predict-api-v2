@@ -5,7 +5,6 @@ from io import BytesIO
 from flask import Flask, request, jsonify
 from keras.models import load_model
 import numpy as np
-from tensorflow.keras.applications.mobilenet import preprocess_input
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 app = Flask(__name__)
@@ -33,7 +32,7 @@ def index():
     if request.method == 'POST':
         try:
             image_bucket = storage_client.get_bucket(
-                'trashure-app')
+                'trashure-bucket')
             filename = request.json['filename']
             img_blob = image_bucket.blob('predict_uploads/' + filename)
             img_path = BytesIO(img_blob.download_as_bytes())
